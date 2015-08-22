@@ -73,10 +73,10 @@ iptables -I INPUT -p tcp --dport 1723 -j ACCEPT
 #gre tunnel protocol
 iptables -I INPUT  --protocol 47 -j ACCEPT
 
-iptables -t nat -A POSTROUTING -s 192.168.2.0/24 -d 0.0.0.0/0 -o eth0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 10.8.8.0/24 -d 0.0.0.0/0 -o eth0 -j MASQUERADE
 
 #supposedly makes the vpn work better
-iptables -I FORWARD -s 192.168.2.0/24 -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -j TCPMSS --set-mss 1356
+iptables -I FORWARD -s 10.8.8.0/24 -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -j TCPMSS --set-mss 1356
 
 END
 sh /etc/rc.local
@@ -106,8 +106,8 @@ END
 cat >/etc/pptpd.conf <<END
 option /etc/ppp/options.pptpd
 logwtmp
-localip 192.168.2.1
-remoteip 192.168.2.10-100
+localip 10.8.8.1
+remoteip 10.8.8.10-200
 END
 cat >/etc/ppp/options.pptpd <<END
 name pptpd
